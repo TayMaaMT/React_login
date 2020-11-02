@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    width: 440px;
+    flex-wrap: wrap;
+    text-align: left;
+    color: aliceblue;
+  
+}
+.vector{
+    margin: 100px 0 0 230px ;
+}
+.writer{
+    margin-top: 55px;
+}

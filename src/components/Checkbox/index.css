@@ -1,0 +1,22 @@
+#label_check{
+    margin-bottom: 20px ;
+}
+#agree{
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin-right: 10px;
+    margin-top: 3px;
+    
+
+}
+input[type=checkbox]:checked{
+    background-color: #2196F3;
+}
+
+
+.paragraph{
+    display: inline;
+    background-color: aqua;
+}
+
