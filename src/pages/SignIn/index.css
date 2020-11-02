@@ -1,0 +1,90 @@
+.signIn_main{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 100vh;
+}
+.signIn_main .left{
+    width: 600px;
+    background-image: url(../../imeges//gaming.png);
+    background-position:right bottom;
+    background-repeat: no-repeat;
+    background-size: 270px 350px;
+
+    }
+
+.signIn_main .left_parent{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 40% 0 0 10%;
+    
+}
+
+.signIn_main .right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:650px;
+}
+
+.signIn_main .form_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 400px;
+    height: 100%;
+
+} 
+.signIn_main .title_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}  
+
+.signIn_main hr{
+    border: 0;
+    border-top: 1px solid #F5F5F5;
+    width: 100%;
+    margin: 10px 0 ;
+
+}
+
+
+.signIn_main .title{
+    margin: 10px 0;
+}
+.signIn_main .back_container{   
+   display:flex;
+   align-self: start;
+   margin: 0 0 5% 10%;
+    
+}
+
+.social{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 70%;
+
+}
+
+.signIn_main button{
+    margin: 20px 0;
+    padding:3% ;
+}
+.signIn_main .link{
+    color:"#1565D8";
+     font-size:"12px" ;
+     font-weight:"500";
+     text-decoration: none;
+
+}
+@media only screen and (max-width:500px){
+    .signIn_main .left{
+        display: none;
+    }
+}

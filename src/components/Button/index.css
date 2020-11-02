@@ -1,0 +1,13 @@
+button{
+
+    border: none;
+    box-shadow: 0 2px 10px rgb(224, 220, 220);
+    border-radius: 5px;
+    outline:none;
+   
+    
+}
+.img{
+    float: left;
+
+}
