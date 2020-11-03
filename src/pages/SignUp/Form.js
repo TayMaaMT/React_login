@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import * as yup from 'yup'; 
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 import Checkbox from '../../components/Checkbox'
@@ -10,17 +11,44 @@ class Form extends Component{
          email:"",
          password:"",
          repeatPassword:"",
-         checkbox:""
+         checkbox:"",
+         errors:{
+                email:"",
+                password:"",
+                repeatPassword:"",
+                checkbox:""
+         }
      }
-
+    
      onchange=(e)=>{
         let {value,name}=e.target;
         value=name==="checkbox"?(this.state.checkbox==="on"?value="":value="on"):value
         this.setState({[name]:value})
      }
+
+     onsubmit=async(e)=>{
+        e.preventDefault();
+        const{email,password,repeatPassword,checkbox}=this.state;
+        let signUpSchema = yup.object().shape({
+            email: yup.string().email().required(),
+            password: yup.string().required(),
+            repeatPassword: yup.string().required(),
+            checkbox: yup.string().required()
+          });
+        try{
+        await signUpSchema.validate({email,password,repeatPassword,checkbox},{abortEarly:false})
+        console.log("valid");
+        }catch(err){
+            const errors= {}
+           err.inner.map(({params,message})=>errors[params.path]=message) 
+          
+           this.setState({errors});
+           console.log(this.state);
+        }
+     }
     render(){
         const{email,password,repeatPassword,checkbox}=this.state;
-        
+
        const data = {
             title:{
                 children:"Register Individual Account!",
@@ -38,21 +66,33 @@ class Form extends Component{
                 placeholder:"Enter email address",
                 type:"email",
                 name:"email",
-                value:email
+                value:email,
+                error:{
+                    text:this.state.errors.email,
+                    borderColor:this.state.errors.email?"red":"gray"
+                }
             },
             password:{
                 children:"Password*",
                 placeholder:"password",
                 type:"password",
                 name:"password",
-                value:password
+                value:password,
+                error:{
+                    text:this.state.errors.password,
+                    borderColor:this.state.errors.password?"red":"gray"
+                }
             },
             repeatPassword:{
                 children:"Repeat password*",
                 placeholder:"Repeat password",
                 type:"password",
                 name:"repeatPassword",
-                value:repeatPassword
+                value:repeatPassword,
+                error:{
+                    text:this.state.errors.repeatPassword,
+                    borderColor:this.state.errors.repeatPassword?"red":"gray"
+                }
             },
             checkbox:{
                 children:"I agree to terms & conditions",
@@ -79,9 +119,9 @@ class Form extends Component{
             }
            
         }
-        console.log(this.state);
+
         return(
-            <form className="form_container">
+            <form className="form_container" onSubmit={this.onsubmit}>
                 <div class="title">
                     <P color={data.title.color} fontSize={data.title.fontSize} fontWeight={data.title.fontWeight}>{data.title.children}</P>
                 </div>
@@ -89,14 +129,13 @@ class Form extends Component{
                     <P color={data.subtitle.color} fontSize={data.subtitle.fontSize} >{data.subtitle.children}</P>
                 </div>
                 <hr />
-                <Input name={data.email.name} type={data.email.type} value={data.email.value} children={data.email.children} placeholder={data.email.placeholder} onchange={this.onchange}/>
-                <Input name={data.password.name} type={data.password.type} value={data.password.value} children={data.password.children} placeholder={data.password.placeholder} onchange={this.onchange} />
-                <Input name={data.repeatPassword.name} type={data.password.type} value={data.repeatPassword.value} children={data.repeatPassword.children} placeholder={data.repeatPassword.placeholder} onchange={this.onchange} />
+                <Input error={data.email.error.text} borderColor={data.email.error.borderColor} name={data.email.name} type={data.email.type} value={data.email.value} children={data.email.children} placeholder={data.email.placeholder} onchange={this.onchange}/>
+                <Input error={data.password.error.text} borderColor={data.password.error.borderColor} name={data.password.name} type={data.password.type} value={data.password.value} children={data.password.children} placeholder={data.password.placeholder} onchange={this.onchange} />
+                <Input error={data.repeatPassword.error.text} borderColor={data.repeatPassword.error.borderColor} name={data.repeatPassword.name} type={data.password.type} value={data.repeatPassword.value} children={data.repeatPassword.children} placeholder={data.repeatPassword.placeholder} onchange={this.onchange} />
                 <Checkbox name={data.checkbox.name} children={data.checkbox.children} value={data.checkbox.value} onchange={this.onchange}/>
-                <Button color={data.signUp.color} children={data.signUp.children} backgroundColor={data.signUp.backgroundColor} width={data.signUp.width} height={data.signUp.height}/>
+                <Button color={data.signUp.color} children={data.signUp.children} backgroundColor={data.signUp.backgroundColor} width={data.signUp.width} height={data.signUp.height} onsubmit={this.onsubmit}/>
                 <OR />
-                <Button children={data.google.children} img={data.google.img} backgroundColor={data.google.backgroundColor} width={data.signUp.width} height={data.signUp.height}/>
-             
+                <Button children={data.google.children} img={data.google.img} backgroundColor={data.google.backgroundColor} width={data.signUp.width} height={data.signUp.height} /> 
             </form>
             
         )
